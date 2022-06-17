@@ -1,5 +1,4 @@
 # nightwatchjs-percy
-Selenium end to end automation tests with NightwatchJS page oriented
 
 ## Prepare
 1. Download and install [nodeJS v8.12](https://nodejs.org) 
