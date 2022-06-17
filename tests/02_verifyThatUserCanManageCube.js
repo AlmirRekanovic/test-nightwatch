@@ -4,8 +4,7 @@ describe('Verify that user can manage cube', function() {
     this.tags = ['cube'];
 
     test('Cube', client => {
-        let loginPage = client.page.login().navigate();
-        let dashboardPage = client.page.dashboard();
+        let dashboardPage = client.page.dashboard().navigate();
 
         dashboardPage.selectGeometry("Cube");
         //This value is customizable and it can be changed accordingly

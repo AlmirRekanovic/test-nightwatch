@@ -4,8 +4,7 @@ describe('Verify that user can manage ending of Cylinder', function() {
     this.tags = ['op-cylinder'];
 
     test('Opened Cylinder', client => {
-        let loginPage = client.page.login().navigate();
-        let dashboardPage = client.page.dashboard();
+        let dashboardPage = client.page.dashboard().navigate();
 
         dashboardPage.selectGeometry("Cylinder");
         dashboardPage.isOpenEnded("True")

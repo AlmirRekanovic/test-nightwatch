@@ -6,13 +6,15 @@
     "node": "16.13.0"
   },
   "scripts": {
-    "test-regression": "percy exec -- nightwatch --tag regression",
+    "test-regression": "percy exec -- nightwatch tests/01_regression.js",
     "test-cube": "percy exec -- nightwatch --tag cube",
     "test-sphere": "percy exec -- nightwatch --tag sphere",
     "test-cone": "percy exec -- nightwatch --tag cone",
     "test-cylinder": "percy exec -- nightwatch --tag cylinder",
     "test-op-cone": "percy exec -- nightwatch --tag op-cone",
     "test-op-cylinder": "percy exec -- nightwatch --tag op-cylinder",
+    "test-multiple-values": "percy exec -- nightwatch --tag cube-multiple-values",
+    "test-undo": "percy exec -- nightwatch --tag cube-undo-values",
 
     "upload": "node test/e2e/upload_screenshots_to_s3.js",
     "dev": "./node_modules/.bin/nodemon -w test/index.html --delay 250ms --exec 'npm run upload'"

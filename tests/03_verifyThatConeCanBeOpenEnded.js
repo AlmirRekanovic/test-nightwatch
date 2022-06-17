@@ -4,8 +4,7 @@ describe('Verify that user can manage ending of Cone', function() {
     this.tags = ['op-cone'];
 
     test('Opened Cone', client => {
-        let loginPage = client.page.login().navigate();
-        let dashboardPage = client.page.dashboard();
+        let dashboardPage = client.page.dashboard().navigate();
 
         dashboardPage.selectGeometry("Cone");
         dashboardPage.isOpenEnded("True")
