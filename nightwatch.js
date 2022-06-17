@@ -1,1 +1,1 @@
-require('nightwatch/bin/runner.js')
+import('nightwatch/bin/runner.js')

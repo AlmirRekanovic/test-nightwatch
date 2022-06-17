@@ -1,12 +1,19 @@
 {
-  "name": "huddle-gaming",
+  "name": "ag-test",
   "version": "1.0.24",
   "main": "index.js",
   "engines": {
     "node": "16.13.0"
   },
   "scripts": {
-    "test": "nightwatch --env chrome",
+    "test-regression": "percy exec -- nightwatch --tag regression",
+    "test-cube": "percy exec -- nightwatch --tag cube",
+    "test-sphere": "percy exec -- nightwatch --tag sphere",
+    "test-cone": "percy exec -- nightwatch --tag cone",
+    "test-cylinder": "percy exec -- nightwatch --tag cylinder",
+    "test-op-cone": "percy exec -- nightwatch --tag op-cone",
+    "test-op-cylinder": "percy exec -- nightwatch --tag op-cylinder",
+
     "upload": "node test/e2e/upload_screenshots_to_s3.js",
     "dev": "./node_modules/.bin/nodemon -w test/index.html --delay 250ms --exec 'npm run upload'"
   },
@@ -17,25 +24,26 @@
   "dependencies": {
     "@babel/core": "^7.16.0",
     "@babel/register": "^7.16.0",
+    "@percy/dom": "^1.0.0-beta.25",
     "axios": "^0.19.2",
     "babel-preset-env": "^1.7.0",
+    "chrome": "^0.1.0",
+    "driver": "^1.0.0",
+    "geckodriver": "^3.0.1",
     "knex": "^0.21.2",
     "nightwatch-html-reporter": "^2.0.5",
-    "selenium": "^2.20.0",
-    "selenium-download": "^2.0.7",
-    "selenium-webdriver": "^4.0.0-alpha.1"
+    "node-resemble-js": "^0.2.0"
   },
   "devDependencies": {
+    "@percy/cli": "^1.3.0",
+    "@percy/nightwatch": "^2.1.0",
     "aws-sdk": "^2.7.13",
-    "chromedriver": "^96.0.0",
+    "chromedriver": "^102.0.0",
     "dotenv": "^10.0.0",
     "env2": "^2.1.1",
     "mime-types": "^2.1.13",
     "nightwatch": "^1.7.12",
-    "nodemon": "^1.11.0",
-    "selenium-server": "^3.141.59",
-    "selenium-server-standalone-jar": "^3.141.5",
-    "selenium-standalone": "^6.19.0"
+    "nodemon": "^1.11.0"
   },
   "keywords": [
     "nightwatch",

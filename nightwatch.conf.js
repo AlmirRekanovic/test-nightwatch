@@ -1,77 +1,96 @@
 /* eslint-disable no-undef */
 require('@babel/register');
 const PKG = require('./package.json'); // so we can get the version of the project
-const BINPATH = './node_modules/nightwatch/bin/'; // change if required.
 const SCREENSHOT_PATH = "./node_modules/nightwatch/screenshots/" + PKG.version + "/";
-const port = 4444;
 const dotenv = require('dotenv');
+const percy = require('@percy/nightwatch');
+const chromedriver = require("chromedriver");
+const geckodriver = require('geckodriver');
 
 dotenv.config({path:'.env'});
 
-const config = { // we use a nightwatch.conf.js file so we can include comments and helper functions
+const config = {
+    // we use a nightwatch.conf.js file so we can include comments and helper functions
     src_folders: [
         'tests'    // we use '/test' as the name of our test directory by default. So 'test/e2e' for 'e2e'.
     ],
-    "page_objects_path": "pages",
-    "globals_path": "globals.js",
-    "output_folder": "./reports", // reports (test outcome) output by Nightwatch
-    "selenium": {
-        "start_process": true,
-        "server_path": BINPATH + "selenium.jar", // downloaded by selenium-download module (see below)
-        "log_path": "",
-        "host": "127.0.0.1",
-        "port": port,
-        "cli_args": {
-            "webdriver.chrome.driver" : BINPATH + "chromedriver.exe" // also downloaded by selenium-download
-        }
-    },
+    page_objects_path: "pages",
+    globals_path: "globals.js",
+    custom_commands_path: [percy.path],
+    output_folder: "./reports", // reports (test outcome) output by Nightwatch
     //"test_workers" : {"enabled" : true, "workers" : "auto"}, // perform tests in parallel where possible
-    "test_settings": {
-        "default": {
-            "launch_url": "http://localhost", // we're testing a Public or "staging" site on Saucelabs
-            "selenium_port": 80,
-            "selenium_host": "ondemand.saucelabs.com",
-            "silent": true,
-            "screenshots": {
-                "enabled": true, // save screenshots to this directory (excluded by .gitignore)
-                "path": SCREENSHOT_PATH
+    webdriver: {
+        silent: false,
+        start_process: true,
+    },
+    test_settings: {
+        default: {
+            launch_url: "http://localhost:3000/",
+            desiredCapabilities: {
+                browserName: "chrome",
+                javascriptEnabled: true,
+                acceptSslCerts: true,
+                cssSelectorsEnabled: true,
+                nativeEvents: true,
+                args: ['-no-sandbox'],
+                chromeWebSecurity: false
             },
-            "username" : "${SAUCE_USERNAME}",     // if you want to use Saucelabs remember to
-            "access_key" : "${SAUCE_ACCESS_KEY}", // export your environment variables (see readme)
-            "globals": {
-                "waitForConditionTimeout": 35000    // wait for content on the page before continuing
-            }
+            webdriver: {
+                port: 4444,
+                server_path: chromedriver.path,
+            },
+            },
+        chrome: { // your local Chrome browser (chromedriver)
+            launch_url: "http://localhost:3000/",
+            desiredCapabilities: {
+                browserName: "chrome",
+                javascriptEnabled: true,
+                acceptSslCerts: true,
+                cssSelectorsEnabled: true,
+                nativeEvents: true,
+                args: ['-no-sandbox'],
+                chromeWebSecurity: false
+            },
+            webdriver: {
+                port: 4444,
+                server_path: chromedriver.path,
+            },
         },
-        "chrome": { // your local Chrome browser (chromedriver)
-            "desiredCapabilities": {
-                "browserName": "chrome",
-                "javascriptEnabled": true,
-                "acceptSslCerts": true
-            }
+        firefox: {
+            webdriver: {
+                server_path: geckodriver.path,
+                port: 4445,
+            },
+            launch_url: `${process.env.APP_BASE_URL}`,
+            desiredCapabilities: {
+                browserName: 'firefox',
+                acceptInsecureCerts: true,
+                'moz:firefoxOptions': {
+                    args: ['-headless'],
+                },
+                args: [
+                    '-headless',
+                    '-no-sandbox',
+                    '--use-fake-device-for-media-stream',
+                    'use-fake-ui-for-media-stream',
+                ],
+            },
         },
-        "firefox" : {
-            "desiredCapabilities": {
-                "platform": "XP",
-                "browserName": "firefox",
-                "version": "33"
-            }
+        safari: {
+            webdriver: {
+                server_path: '/usr/bin/safaridriver',
+                port: 4446,
+            },
+            launch_url: `${process.env.APP_BASE_URL}`,
+            desiredCapabilities: {
+                browserName: 'safari',
+                args: ['-no-sandbox', '--use-fake-device-for-media-stream', 'use-fake-ui-for-media-stream'],
+            },
         },
     }
 }
 module.exports = config;
-/**
- * selenium-download does exactly what it's name suggests;
- * downloads (or updates) the version of Selenium (& chromedriver)
- * on your localhost where it will be used by Nightwatch.
- */
-require('fs').stat(BINPATH + 'selenium.jar', function (err, stat) { // got it?
-    if (err || !stat || stat.size < 1) {
-        require('selenium-download').ensure(BINPATH, function(error) {
-            if (error) throw new Error(error); // no point continuing so exit!
-            console.log(':heavy_check_mark: Selenium & Chromedriver downloaded to:', BINPATH);
-        });
-    }
-});
+
 function padLeft (count) { // theregister.co.uk/2016/03/23/npm_left_pad_chaos/
     return count < 10 ? '0' + count : count.toString();
 }

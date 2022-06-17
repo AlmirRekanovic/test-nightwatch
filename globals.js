@@ -5,7 +5,23 @@ var reporter = new HtmlReporter({
 	reportsDirectory: __dirname + '/reports',
   themeName: 'compact'
 });
+
 module.exports = {
-  waitForConditionTimeout: 50000,
-	reporter: reporter.fn
+	waitForConditionTimeout: 30000,
+	abortOnFailure: false,
+	reporter: reporter.fn,
+
+	beforeEach: function (client, done) {
+		client.maximizeWindow();
+		client.deleteCookies();
+		client.perform(function () {
+			done();
+		});
+	},
+
+	afterEach: async function (client, done) {
+		client.end(function () {
+			done();
+		});
+	},
 };
