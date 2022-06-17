@@ -8,11 +8,11 @@ describe('Verify that user can manage Cylinder', function() {
         let dashboardPage = client.page.dashboard();
 
         dashboardPage.selectGeometry("Cylinder");
-        //Value for Radius Top goes from 0.1 to 1.5
+        //This value is customizable and it can be changed accordingly
         dashboardPage.setRadiusTop("1");
-        //Value for Radius Bottom goes from 0.1 to 1.5
+        //This value is customizable and it can be changed accordingly
         dashboardPage.setRadiusBottom("1");
-        //Value for Height goes from 0.1 to 2
+        //This value is customizable and it can be changed accordingly
         dashboardPage.setHeight("1");
         client.percySnapshot('Cylinder');
 

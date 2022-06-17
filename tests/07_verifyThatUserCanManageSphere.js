@@ -8,12 +8,12 @@ describe('Verify that user can manage Sphere', function() {
         let dashboardPage = client.page.dashboard();
 
         dashboardPage.selectGeometry("Sphere");
-        //Value for Radius goes from 0.1 to 1
+        //This value is customizable and it can be changed accordingly
         dashboardPage.setRadius("1")
-        //Value for Width Segments goes from 3 to 32
-        dashboardPage.setWidthSegments("20");
-        //Value for Height Segments goes from 2 to 32
-        dashboardPage.setHeightSegments("20");
+        //This value is customizable and it can be changed accordingly
+        dashboardPage.setWidthSegments("1");
+        //This value is customizable and it can be changed accordingly
+        dashboardPage.setHeightSegments("1");
         dashboardPage.setColor("Sphere", "#000000");
         client.percySnapshot('Sphere');
     })

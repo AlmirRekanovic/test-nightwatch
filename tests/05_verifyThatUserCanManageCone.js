@@ -8,13 +8,13 @@ describe('Verify that user can manage Cone', function() {
         let dashboardPage = client.page.dashboard();
 
         dashboardPage.selectGeometry("Cone");
-        //Value for Radius goes from 0.1 to 1.5
+        //This value is customizable and it can be changed accordingly
         dashboardPage.setRadius("1")
-        //Value for Height goes from 0.5 to 2
+        //This value is customizable and it can be changed accordingly
         dashboardPage.setHeight("1");
-        //Value for Theta Start goes from 0 to 2
-        dashboardPage.setThetaStart("1");
-        //Value for Theta Length goes from 0 to 2
+        //This value is customizable and it can be changed accordingly
+        dashboardPage.setThetaStart("2");
+        //This value is customizable and it can be changed accordingly
         dashboardPage.setThetaLength("1");
         client.percySnapshot('Cone');
 

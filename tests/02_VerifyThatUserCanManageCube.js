@@ -8,9 +8,9 @@ describe('Verify that user can manage cube', function() {
         let dashboardPage = client.page.dashboard();
 
         dashboardPage.selectGeometry("Cube");
-        //Value for Width goes from 0.1 to 2
+        //This value is customizable and it can be changed accordingly
         dashboardPage.setWidth("1");
-        //Value for Height goes from 0.1 to 2
+        //This value is customizable and it can be changed accordingly
         dashboardPage.setHeight("1");
         //You can use which ever you want hex code to set the color
         dashboardPage.setColor("Cube", "#000000");
