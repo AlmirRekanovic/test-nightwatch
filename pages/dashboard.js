@@ -88,6 +88,7 @@ const pageCommands = {
     }
   },
 };
+
 module.exports = {
   url: 'http://localhost:3000/',
   commands: [pageCommands],
